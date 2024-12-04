@@ -3,8 +3,6 @@ from typing import Optional, List
 import json
 
 class Agent(BaseModel):
-    id: str
-    """The ID of the agent"""
     name: str
     """The name of the agent"""
     prompt: str
