@@ -7,15 +7,15 @@ from typing import List, Dict, Literal, Optional
 from .utils import handle_non_stream, handle_stream
 from .types import Agent, Document, DocumentMetadata
 
-# base_url = 'https://api-beta.codegpt.co/api/v1'
+base_url = 'https://api-beta.codegpt.co/api/v1'
 JUDINI_TUTORIAL = f'{base_url}/docs'
 PLAYGROUND_KEYS_URL = 'https://app.codegpt.co/en/apikeys' 
 
 class CodeGPTPlus:
-    # def __init__(self,
-    #              api_key: Optional[str] = None,
-    #              org_id: Optional[str] = None,
-    #              base_url: str = base_url):
+    def __init__(self,
+                 api_key: Optional[str] = None,
+                 org_id: Optional[str] = None,
+                 base_url: str = base_url):
 
         if not api_key:
             api_key = os.getenv("CODEGPT_API_KEY")
@@ -133,88 +133,7 @@ class CodeGPTPlus:
         agent_lists = response.json()
         return [Agent(**agent_dict) for agent_dict in agent_lists]
     
-    def get_agent(self, agent_id: str) -> Agent:
-        """
-        Retrieves a specific agent from the CodeGPTPlus API.
-
-        Parameters
-        ----------
-        agent_id: The ID of the agent to retrieve.
-
-        Returns a json object representing the agent with the following
-        properties:
-            id: str = The ID of the agent
-            name: str = The name of the agent
-            prompt: str = The prompt of the agent
-            model: str = The model of the agent
-            agent_documents: Optional[List[str]] = The list of documents
-                                                   associated with the agent
-            welcome: str = The welcome message of the agent
-            pincode: Optional[str] = The pincode of the agent
-            is_public: bool = Whether the agent is public or not
-            agent_type: str = The type of the agent
-        """
-
-        response = requests.get(f"{self.base_url}/agent/{agent_id}?populate=agent_documents",
-                                 headers=self.headers)
-
-        if response.status_code != 200:
-            raise Exception(f'JUDINI: API Response was: {response.status_code}'
-                            + f' {response.text} {JUDINI_TUTORIAL}')
-        
-        return Agent(**response.json())
-    
-    def create_agent(self,
-                     name: str,
-                     model: str="gpt-3.5-turbo",
-                     prompt: str = "You are a helpful assistant.",
-                     welcome: str = "Hello, how can I help you today?",
-                     topk: int=3,
-                     temperature: int=0.7,
-                     ) -> Agent:
-        """
-        Creates a new agent in the CodeGPTPlus API.
-
-        Parameters
-        ----------
-        name: The name of the agent.
-        model: The model to be used by the agent. For example, 'gpt-3.5-turbo'.
-        prompt: The prompt of the agent.
-        welcome: The welcome message of the agent.
-        topk: The number of elements to retrieve from the documents
-        temperature: The temperature of the agent.
-
-         Returns a json object representing the agent with the following
-         properties:
-            id: str = The ID of the agent
-            name: str = The name of the agent
-            prompt: str = The prompt of the agent
-            model: str = The model of the agent
-            agent_documents: Optional[List[str]] = The list of documents
-                                                   associated with the agent
-            welcome: str = The welcome message of the agent
-            pincode: Optional[str] = The pincode of the agent
-            is_public: bool = Whether the agent is public or not
-            agent_type: str = The type of the agent
-        """
-
-        payload = json.dumps({
-            "name": name,
-            "model": model,
-            "prompt": prompt,
-            "welcome": welcome,
-            "topk": topk,
-            "temperature": temperature
-        })
-        response = requests.post(f"{self.base_url}/agent", headers=self.headers,
-                                 data=payload)
-        
-        if response.status_code != 200:
-            raise Exception(f'JUDINI: API Response was: {response.status_code}'
-                            + f' {response.text} {JUDINI_TUTORIAL}')
-        
-        return Agent(**response.json())
-    
+   
     def update_agent(self,
                      agent_id: str,
                      name: Optional[str] = None,
