@@ -7,7 +7,6 @@ from typing import List, Dict, Literal, Optional
 from .utils import handle_non_stream, handle_stream
 from .types import Agent, Document, DocumentMetadata
 
-base_url = 'https://api-beta.codegpt.co/api/v1'
 JUDINI_TUTORIAL = f'{base_url}/docs'
 PLAYGROUND_KEYS_URL = 'https://app.codegpt.co/en/apikeys' 
 
