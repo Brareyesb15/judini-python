@@ -12,10 +12,10 @@ JUDINI_TUTORIAL = f'{base_url}/docs'
 PLAYGROUND_KEYS_URL = 'https://app.codegpt.co/en/apikeys' 
 
 class CodeGPTPlus:
-    def __init__(self,
-                 api_key: Optional[str] = None,
-                 org_id: Optional[str] = None,
-                 base_url: str = base_url):
+    # def __init__(self,
+    #              api_key: Optional[str] = None,
+    #              org_id: Optional[str] = None,
+    #              base_url: str = base_url):
 
         if not api_key:
             api_key = os.getenv("CODEGPT_API_KEY")
